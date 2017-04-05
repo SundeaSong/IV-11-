@@ -1,8 +1,4 @@
 #include "IAD_CAL.h"
-//Read Fixture ID from EEPROM
-//#define NEW_TESTER
-
-#define MAXTimes  360000        //1H
 
 char Barcode_Encoded[100] = {'\0'};
 
@@ -32,25 +28,20 @@ void Reset_Control(void)
     if ((X3 == 0) && (X1 == 0))
     {
         Delay_MS(50);
-
         if ((X1 == 0) && (X3 == 0) && (stopflag1 == 0))
         {
-            stopflag1++;
+            stopflag1 = 1;
         }
 
         if ((stopflag1 == 1) && (X1 == 0))
         {
             Delay_MS(500);
             Y1_OFF;
-
             while (X4 != 0) {};
-
             stopflag1 = 0;
         }
     }
 }
-
-
 //启动按钮
 void StartButton_Control(void)
 {
@@ -60,23 +51,17 @@ void StartButton_Control(void)
     if ((X2 == 0) && (X8 == 0))
     {
         Delay_MS(50);
-
         if ((X2 == 0) && (X8 == 0))
         {
-            flag1++;
+            flag1 = 1;
         }
-
         while ((!X2) && (!X8));
-
         if ((flag1 == 1) && (X1 == 0) && (X3 == 1))
         {
             Delay_MS(500);
             Y1_ON;
-
             while (X5 != 0) {};
-
             flag1 = 0;
-
             flag2++;
         }
 
@@ -96,28 +81,18 @@ void Tester_Control(void)
     StartButton_Control();
 }
 
-//控制板版本
-void ControlBoard(void)
-{
-    printf("HW : V1.0\r\n");
-}
-
-//固件版本
-void Firmware(void)
-{
-    printf("FW : V1.0.0\r\n");
-}
-
 //气缸动作
 void PUSH_CONNECT(void)
 {
     if ((X1 == 0) && (X3 == 1))
     {
-        Y1_ON;
-
-        while (X5);
-
-        printf("OK@_@\r\n");
+			Delay_MS(50);
+			if((X1 == 0)&&(X3 == 1))
+      {  
+					Y1_ON;
+			}
+      while (X5);
+      printf("OK@_@\r\n");
     }
 }
 
@@ -126,11 +101,13 @@ void PUSH_DISCONNECT(void)
 {
     if ((X1 == 0) && (X3 == 1))
     {
-        Y1_OFF;
-
-        while (X4);
-
-        printf("0K@_@\r\n");
+			Delay_MS(50);
+			if((X1 == 0)&&(X3 == 1))
+			{
+					Y1_OFF;
+			}
+      while (X4);
+      printf("0K@_@\r\n");
     }
 }
 
@@ -139,22 +116,9 @@ void Reset_Test(void)
 {
     Delay_MS(500);
     Y1_OFF;
-
     while (X4);
-
     printf("OK@_@\r\n");
 }
 
-void Help_Cmd(void)
-{
-    printf("\n\\**********************Help********************\\\n");
-    printf("PUSH IN                        \"Cylinder stretched out\"\n");
-    printf("PUSH OUT                    \"Cylinder rester\"\n");
-    printf("RESET                            \"Fixture rester\"\n");
-    printf("FIXTUREID_                  \"Write fixture ID\"\n");
-    printf("READ FIXTUREID         \"Read fixture ID\"\n");
-    printf("FIRMWARE VERSION    \"Read the firmware version\"\n");
-    printf("HARDWARE VERSION  \"Read hardware version\"\n");
-}
 
 

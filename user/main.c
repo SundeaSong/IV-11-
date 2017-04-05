@@ -1,23 +1,19 @@
 /******************** (C) COPYRIGHT 2013 STMicroelectronics ********************
 * File Name          : main.c
 * Author             :
-* Version            : V1.0.0
+* Version            : V0.0.2
 * Date               : 01/09/2014
 * Description        :
-* Date               : 2017/3/27创建
+* Date                           : 2017/03/27创建
 
 
-                      X1 : 安全光栅                   Y1 : 气缸
-                      X2 : START
-                      X3 : 复位
-                      X4 : 气缸原点Sensor
-                      X5 : 气缸动点Sensor
-                      X8 : START
-
+                                            X1:SENSOR                       Y1 :POWER
+                                            X2:START1                       Y2 :VAL+
+                                            X3:RESET                        Y16:VAL-
+                                            X8:START2
 *******************************************************************************/
 #include "Config.h"
 #include "IAD_CAL.h"
-
 #ifdef __GNUC__
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #else
@@ -31,9 +27,8 @@ unsigned short int ERROR_FLAG;
 unsigned short int ERROR_CODE;
 const unsigned short int FW_VERSION = 15;
 
-
-unsigned int  HOT_timeout, B2B_timeout, Reset_timeout;
 unsigned char Start_Flag;
+unsigned char Stop_Flag;
 unsigned int Program_Cycle_Nums = 0;
 
 unsigned int U1ProtocolAnalysis(void);
@@ -52,12 +47,13 @@ int main(void)
     BSP_Init();                                     //Board Init，板级初始化
     OutputControl(0x0000);
     PWR_ON;
-    Delay_MS(1000);
+    Start_Flag = 0;
+    Stop_Flag  = 0;
 
     while (1)
     {
-        Tester_Control();                           //按钮控制
-        U1ProtocolAnalysis();                       //命令控制
+        Tester_Control();
+        U1ProtocolAnalysis();
     }
 }
 
@@ -72,10 +68,6 @@ unsigned int U1ProtocolAnalysis(void)
 {
     unsigned char i;
     unsigned char rlen;
-    unsigned char Push_flag = 0;
-    unsigned char H_flag = 0;
-    unsigned char R_flag = 0;
-    unsigned char F_flag = 0;
     char Rx1_String[128] = {0};
 
     if (USARTStructure1.RX_Flag == 1)                                               //查询到有接受数据
@@ -88,102 +80,96 @@ unsigned int U1ProtocolAnalysis(void)
         }
 
         Rx1_String[i] = '\0';
-        rlen = Get_Strlen(&Rx1_String[0]);
 
-        if (rlen != 0)
+        switch (Rx1_String[0])
         {
-            switch (Rx1_String[0])
-            {
-                case 'P':
-                    if (strcmp("PUSH IN", Rx1_String) == 0)                 //气缸动作
+            case 'P':
+                if (StringCompare2("PUSH_IN", &Rx1_String[0]) == 0)
+                {
+                    if (X1 == 0)
                     {
-                        PUSH_CONNECT();
-                        Push_flag = 1;
+                        Y1_ON;
+											while(X4);
+                        printf("OK@_@\r\n");
                     }
+                }
 
-                    if (strcmp("PUSH OUT", Rx1_String) == 0)            //气缸复位
+                if (StringCompare2("PUSH_OUT", &Rx1_String[0]) == 0)
+                {
+                    if (X1 == 0)
                     {
-                        PUSH_DISCONNECT();
-                        Push_flag = 1;
+                        Y1_OFF;
                     }
-
-                    if (Push_flag == 0)
+										while(X5);
+                    printf("OK@_@\r\n");
+                }
+                break;
+            
+						case 'R':
+                if (StringCompare2("RESET", &Rx1_String[0]) == 0)
+                {
+                    if (X1 == 0)
                     {
-                        printf("Command Error\r\n");
-
+                        Y1_OFF;
+                        printf("OK@_@\r\n");
                     }
+                }
+                break;
 
-                    break;
+            case 'H':
+                if (StringCompare2("HELP", &Rx1_String[0]) == 0)
+                {
+                    PrintCommandsList();
+                }
 
-                case 'R':
-                    if (strcmp("RESET", Rx1_String) == 0)               //机台复位
+            case '$':
+                rlen = Get_Strlen(&Rx1_String[0]);
+
+                if (rlen == 19)
+                {
+                    if (StringCompare3("$C.W_TESTERID_", &Rx1_String[0], 14) == 0)
                     {
-                        Reset_Test();
-                        R_flag = 1;
+                        Write_FixtureID(&Rx1_String[14]);
+                        printf("TEST_ID,%05d>\r", Read_FixtureID());
                     }
-
-                    if (strcmp("READ FIXTUREID", Rx1_String) == 0)      //读取治具ID
+                    else
                     {
-                        printf("FixtureID : %05d\n", Read_FixtureID());
-                        R_flag = 1;
+                        //ERR = 1001 ,输入格式错误
+												printf("Error Command");
+                        printf("TEST_ID,%05d>\r", Read_FixtureID());
                     }
+                }
 
-                    if (R_flag == 0)
-                    {
-                        printf("Command Error\r\n");
-                    }
+                if (StringCompare2("$C.GET_TESTERID", &Rx1_String[0]) == 0)
+                {
+                    printf("$M.TESTID,%05d>\r", Read_FixtureID());
+                }
 
-                    break;
+                break;
 
-                case 'F':
-                    if (strcmp("FIRMWARE VERSION", Rx1_String) == 0)    //获取固件版本
-                    {
-                        Firmware();
-                        F_flag = 1;
-                    }
-
-                    if (strncmp("FIXTUREID_", Rx1_String, 10) == 0)     //写治具ID
-                    {
-                        Write_FixtureID(&Rx1_String[10]);
-                        printf("FixtureID : %05d\n", Read_FixtureID());
-                        F_flag = 1;
-                    }
-
-                    if (F_flag == 0)
-                    {
-                        printf("Command Error\r\n");
-                    }
-
-                    break;
-
-                case 'H':
-                    if (strcmp("HARDWARE VERSION", Rx1_String) == 0)    //获取控制板版本
-                    {
-                        ControlBoard();
-                        H_flag = 1;
-                    }
-
-                    if (strcmp("HELP", Rx1_String) == 0)                //获取帮助
-                    {
-                        Help_Cmd();
-                        H_flag = 1;
-                    }
-
-                    if (H_flag == 0)
-                    {
-                        printf("Command Error\r\n");
-                    }
-
-                    break;
-
-                default :
-                    printf("Command Error\r\n");
-                    break;
-            }
+            default:
+                printf("ERROR_COMMAND>\r");
+                break;
         }
     }
 
     return 0;
+}
+
+
+/*******************************************************************************
+* Function Name  :打印治具命令列表
+* Description    : 
+* Parameter		 
+* Return		 
+********************************************************************************/
+void PrintCommandsList(void)
+{
+    printf("\n\\**********************Help********************\\\r\n");
+    printf("PUSH_IN                     \"Cylinder stretched out\"\r\n");
+    printf("PUSH_OUT                    \"Cylinder rester\"\r\n");
+    printf("RESET                       \"Fixture rester\"\r\n");
+		printf("$C.GET_TESTERID              Read ID\r\n");
 }
 
 
