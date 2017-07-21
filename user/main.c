@@ -5,12 +5,22 @@
 * Date               : 01/09/2014
 * Description        :
 * Date                           : 2017/03/27创建
+		
+		动作流程：①hold锁紧---②滑台汽缸推进--->③底层汽缸动作--->④顶层汽缸左右移动--->测试完成，治具复位
 
-
-                                            X1:SENSOR                       Y1 :POWER
-                                            X2:START1                       Y2 :VAL+
-                                            X3:RESET                        Y16:VAL-
-                                            X8:START2
+		 X1:PUSH IN							Y1:PUSH
+		 X2:PUSH OUT						Y2:LOCK
+		 X3:LOCK ON							Y3:PULL
+		 X4:LOCK OFF						Y4:TOGGLE SWITCH
+		 X5:PULL ON
+		 X6:PULL OFF
+		 X7:TOGGLE LEFT(拨动开关)
+		 X8:TOGGLE RIGHT
+		 
+		 X19:LOCK_BUTTON
+		 X20:START_BUTTON
+		 X21:RESET_BUTTON
+		 X22:RASTER	(光幕)
 *******************************************************************************/
 #include "Config.h"
 #include "IAD_CAL.h"
@@ -25,7 +35,7 @@ const unsigned char  Ascill_16[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8',
 
 unsigned short int ERROR_FLAG;
 unsigned short int ERROR_CODE;
-const unsigned short int FW_VERSION = 15;
+const unsigned short int FW_VERSION = 1;
 
 unsigned char Start_Flag;
 unsigned char Stop_Flag;
@@ -83,45 +93,70 @@ unsigned int U1ProtocolAnalysis(void)
 
         switch (Rx1_String[0])
         {
-            case 'P':
-                if (StringCompare2("PUSH_IN", &Rx1_String[0]) == 0)
+            case 'L':
+                if (StringCompare2("LOCK_ON", &Rx1_String[0]) == 0)
                 {
-                    if (X1 == 0)
-                    {
-                        Y1_ON;
-											while(X4);
-                        printf("OK@_@\r\n");
-                    }
+												LOCK_ON();
                 }
 
-                if (StringCompare2("PUSH_OUT", &Rx1_String[0]) == 0)
+                if (StringCompare2("LOCK_OFF", &Rx1_String[0]) == 0)
                 {
-                    if (X1 == 0)
-                    {
-                        Y1_OFF;
-                    }
-										while(X5);
-                    printf("OK@_@\r\n");
+												LOCK_OFF();
                 }
-                break;
+              break;
             
+						case 'P':
+                if (StringCompare2("PUSH_IN", &Rx1_String[0]) == 0)
+                {
+												PUSH_IN();
+                }
+								if (StringCompare2("PUSH_OUT", &Rx1_String[0]) == 0)
+                {
+												PUSH_OUT();
+                }
+								if (StringCompare2("PULL_IN", &Rx1_String[0]) == 0)
+                {
+										if((X1 == ON)&&(X22 == ON))
+										{
+											PULL_ON();
+										}
+								}
+								if (StringCompare2("PULL_OUT", &Rx1_String[0]) == 0)
+                {
+										if((X1 == ON)&&(X22 == ON))
+										{
+											PULL_OFF();
+										}
+								}
+                break;
+						case 'T':
+                if (StringCompare2("TOGGLE_LIFE", &Rx1_String[0]) == 0)
+                {
+									if((X5 == ON)&&(X22 == ON))
+									{
+											TOGGLE_LIFE();
+									}
+								}
+								if (StringCompare2("TOGGLE_RIGHT", &Rx1_String[0]) == 0)
+                {
+									if((X5 == ON)&&(X22 == ON))
+									{
+											TOGGLE_RIGHT();
+									}
+								}
+								break;
 						case 'R':
                 if (StringCompare2("RESET", &Rx1_String[0]) == 0)
                 {
-                    if (X1 == 0)
-                    {
-                        Y1_OFF;
-                        printf("OK@_@\r\n");
-                    }
+                    Reset_Test();
                 }
-                break;
-
+								break;
             case 'H':
                 if (StringCompare2("HELP", &Rx1_String[0]) == 0)
                 {
                     PrintCommandsList();
                 }
-
+								break;
             case '$':
                 rlen = Get_Strlen(&Rx1_String[0]);
 
@@ -166,10 +201,16 @@ unsigned int U1ProtocolAnalysis(void)
 void PrintCommandsList(void)
 {
     printf("\n\\**********************Help********************\\\r\n");
-    printf("PUSH_IN                     \"Cylinder stretched out\"\r\n");
-    printf("PUSH_OUT                    \"Cylinder rester\"\r\n");
-    printf("RESET                       \"Fixture rester\"\r\n");
-		printf("$C.GET_TESTERID              Read ID\r\n");
+		printf("LOCK_ON\r\n");
+		printf("LOCK_OFF\r\n\r\n");
+    printf("PUSH_IN\r\n");
+    printf("PUSH_OUT\r\n\r\n");
+		printf("PULL_IN\r\n");
+		printf("PULL_OUT\r\n\r\n");
+		printf("TOGGLE_LIFE\r\n");
+		printf("TOGGLE_RIGHT\r\n\r\n");
+    printf("RESET\r\nFixture rester\r\n");
+		printf("$C.GET_TESTERID\r\nRead ID\r\n");
 }
 
 

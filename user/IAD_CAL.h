@@ -16,10 +16,18 @@ void Firmware(void);
 void ControlBoard(void);
 void Tester_Control(void);
 void Start_Control(void);
-void PUSH_CONNECT(void);
-void PUSH_DISCONNECT(void);
+void LockBotton_Control(void);
 void Reset_Test(void);
 void Help_Cmd(void);
+void Reset_Control(void);
+void TOGGLE_LIFE(void);
+void TOGGLE_RIGHT(void);
+void PULL_ON(void);
+void PULL_OFF(void);
+void PUSH_IN(void);
+void PUSH_OUT(void);
+void LOCK_ON(void);
+void LOCK_OFF(void);
 #ifdef __cplusplus
 }
 #endif
