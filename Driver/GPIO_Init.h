@@ -10,101 +10,138 @@ extern "C" {
 #define ON  0
 #define OFF 1
 
-#define SW_ID_0       GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_9)
-#define SW_ID_1       GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_10)
-#define SW_ID_2       GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_11)	
-	
-#define X1			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_2)
-#define X2			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_3)
-#define X3			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_4)
-#define X4			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_5)
-#define X5			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_6)
-#define X6			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_0)
-#define X7			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_1)
-#define X8			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_2)
-	
-#define X9			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_3)
-#define X10			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_4)
-#define X11			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_5)
-#define X12			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_6)
-#define X13			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_7)
-#define X14			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_8)
-#define X15			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_9)
-#define X16			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_10)
-
-#define X17			GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_0)
-#define X18			GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1)
-#define X19			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_11)
-#define X20			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_12)
-#define X21			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_13)
-#define X22			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_14)
-#define X23			GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_15)
-#define X24			GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_0)
-
-#define X25			GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_1)
-#define X26			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_7)
-#define X27			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_8)
-#define X28			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_9)
-#define X29			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_10)
-#define X30			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_11)
-#define X31			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_12)
-#define X32			GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_13)
+#define SW_ID_0       GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_7)
+#define SW_ID_1       GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_9)
+#define SW_ID_2       GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_10)	
 
 
-#define Y1        GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_14)
-#define Y1_ON     GPIO_ResetBits(GPIOD, GPIO_Pin_14)
-#define Y1_OFF    GPIO_SetBits(GPIOD, GPIO_Pin_14)
-#define Y2        GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_15)
-#define Y2_ON     GPIO_ResetBits(GPIOD, GPIO_Pin_15)
-#define Y2_OFF    GPIO_SetBits(GPIOD, GPIO_Pin_15)
-#define Y3        GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_2)
-#define Y3_ON     GPIO_ResetBits(GPIOG, GPIO_Pin_2)
-#define Y3_OFF    GPIO_SetBits(GPIOG, GPIO_Pin_2)
-#define Y4        GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_3)
-#define Y4_ON     GPIO_ResetBits(GPIOG, GPIO_Pin_3)
-#define Y4_OFF    GPIO_SetBits(GPIOG, GPIO_Pin_3)
-#define Y5        GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_7)
-#define Y5_ON     GPIO_ResetBits(GPIOC, GPIO_Pin_7)
-#define Y5_OFF    GPIO_SetBits(GPIOC, GPIO_Pin_7)
-#define Y6        GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8)
-#define Y6_ON     GPIO_ResetBits(GPIOC, GPIO_Pin_8)
-#define Y6_OFF    GPIO_SetBits(GPIOC, GPIO_Pin_8)
-#define Y7        GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_9)
-#define Y7_ON     GPIO_ResetBits(GPIOC, GPIO_Pin_9)
-#define Y7_OFF    GPIO_SetBits(GPIOC, GPIO_Pin_9)
-#define Y8        GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_8)
-#define Y8_ON     GPIO_ResetBits(GPIOA, GPIO_Pin_8)
-#define Y8_OFF    GPIO_SetBits(GPIOA, GPIO_Pin_8)
+#define A1        GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_2)
+#define A1_ON     GPIO_ResetBits(GPIOE, GPIO_Pin_2)
+#define A1_OFF    GPIO_SetBits(GPIOE, GPIO_Pin_2)
+#define A2        GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_3)
+#define A2_ON     GPIO_ResetBits(GPIOE, GPIO_Pin_3)
+#define A2_OFF    GPIO_SetBits(GPIOE, GPIO_Pin_3)
+#define A3        GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_4)
+#define A3_ON     GPIO_ResetBits(GPIOE, GPIO_Pin_4)
+#define A3_OFF    GPIO_SetBits(GPIOE, GPIO_Pin_4)
+#define A4        GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_5)
+#define A4_ON     GPIO_ResetBits(GPIOE, GPIO_Pin_5)
+#define A4_OFF    GPIO_SetBits(GPIOE, GPIO_Pin_5)
+#define A5        GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_6)
+#define A5_ON     GPIO_ResetBits(GPIOE, GPIO_Pin_6)
+#define A5_OFF    GPIO_SetBits(GPIOE, GPIO_Pin_6)
+#define A6        GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15)
+#define A6_ON     GPIO_ResetBits(GPIOC, GPIO_Pin_15)
+#define A6_OFF    GPIO_SetBits(GPIOC, GPIO_Pin_15)
+#define A7        GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_0)
+#define A7_ON     GPIO_ResetBits(GPIOF, GPIO_Pin_0)
+#define A7_OFF    GPIO_SetBits(GPIOF, GPIO_Pin_0)
+#define A8        GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_1)
+#define A8_ON     GPIO_ResetBits(GPIOF, GPIO_Pin_1)
+#define A8_OFF    GPIO_SetBits(GPIOF, GPIO_Pin_1)
+#define A9       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_2)
+#define A9_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_2)
+#define A9_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_2)
+#define A10       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_3)
+#define A10_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_3)
+#define A10_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_3)
+
+#define A11       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_4)
+#define A11_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_4)
+#define A11_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_4)
+#define A12        GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_5)
+#define A12_ON     GPIO_ResetBits(GPIOF, GPIO_Pin_5)
+#define A12_OFF    GPIO_SetBits(GPIOF, GPIO_Pin_5)
+#define A13       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_6)
+#define A13_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_6)
+#define A13_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_6)
+#define A14       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_7)
+#define A14_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_7)
+#define A14_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_7)
+#define A15       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_8)
+#define A15_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_8)
+#define A15_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_8)
+#define A16       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_9)
+#define A16_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_9)
+#define A16_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_9)
+#define A17       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_10)
+#define A17_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_10)
+#define A17_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_10)
+#define A18       GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0)
+#define A18_ON    GPIO_ResetBits(GPIOA, GPIO_Pin_0)
+#define A18_OFF   GPIO_SetBits(GPIOA, GPIO_Pin_0)
+#define A19       GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_1)
+#define A19_ON    GPIO_ResetBits(GPIOA, GPIO_Pin_1)
+#define A19_OFF   GPIO_SetBits(GPIOA, GPIO_Pin_1)
+#define A20       GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_2)
+#define A20_ON    GPIO_ResetBits(GPIOA, GPIO_Pin_2)
+#define A20_OFF   GPIO_SetBits(GPIOA, GPIO_Pin_2)
+
+#define B1        GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_4)
+#define B1_ON     GPIO_ResetBits(GPIOA, GPIO_Pin_4)
+#define B1_OFF    GPIO_SetBits(GPIOA, GPIO_Pin_4)
+#define B2        GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_6)
+#define B2_ON     GPIO_ResetBits(GPIOA, GPIO_Pin_6)
+#define B2_OFF    GPIO_SetBits(GPIOA, GPIO_Pin_6)
+#define B3        GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_7)
+#define B3_ON     GPIO_ResetBits(GPIOA, GPIO_Pin_7)
+#define B3_OFF    GPIO_SetBits(GPIOA, GPIO_Pin_7)
+#define B4        GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_4)
+#define B4_ON     GPIO_ResetBits(GPIOC, GPIO_Pin_4)
+#define B4_OFF    GPIO_SetBits(GPIOC, GPIO_Pin_4)
+#define B5        GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_5)
+#define B5_ON     GPIO_ResetBits(GPIOC, GPIO_Pin_5)
+#define B5_OFF    GPIO_SetBits(GPIOC, GPIO_Pin_5)
+#define B6        GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_0)
+#define B6_ON     GPIO_ResetBits(GPIOB, GPIO_Pin_0)
+#define B6_OFF    GPIO_SetBits(GPIOB, GPIO_Pin_0)
+#define B7        GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1)
+#define B7_ON     GPIO_ResetBits(GPIOB, GPIO_Pin_1)
+#define B7_OFF    GPIO_SetBits(GPIOB, GPIO_Pin_1)
+#define B8        GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_11)
+#define B8_ON     GPIO_ResetBits(GPIOF, GPIO_Pin_11)
+#define B8_OFF    GPIO_SetBits(GPIOF, GPIO_Pin_11)
+#define B9       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_12)
+#define B9_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_12)
+#define B9_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_12)
+#define B10       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_13)
+#define B10_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_13)
+#define B10_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_13)
 
 
-#define Y9       GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_6)
-#define Y9_ON    GPIO_ResetBits(GPIOC, GPIO_Pin_6)
-#define Y9_OFF   GPIO_SetBits(GPIOC, GPIO_Pin_6)
-#define Y10       GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_6)
-#define Y10_ON    GPIO_ResetBits(GPIOG, GPIO_Pin_6)
-#define Y10_OFF   GPIO_SetBits(GPIOG, GPIO_Pin_6)
-#define Y11       GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_5)
-#define Y11_ON    GPIO_ResetBits(GPIOG, GPIO_Pin_5)
-#define Y11_OFF   GPIO_SetBits(GPIOG, GPIO_Pin_5)
-#define Y12        GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_4)
-#define Y12_ON     GPIO_ResetBits(GPIOG, GPIO_Pin_4)
-#define Y12_OFF    GPIO_SetBits(GPIOG, GPIO_Pin_4)
+#define B11       GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_14)
+#define B11_ON    GPIO_ResetBits(GPIOF, GPIO_Pin_14)
+#define B11_OFF   GPIO_SetBits(GPIOF, GPIO_Pin_14)
+#define B12        GPIO_ReadInputDataBit(GPIOF, GPIO_Pin_15)
+#define B12_ON     GPIO_ResetBits(GPIOF, GPIO_Pin_15)
+#define B12_OFF    GPIO_SetBits(GPIOF, GPIO_Pin_15)
+#define B13       GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_0)
+#define B13_ON    GPIO_ResetBits(GPIOG, GPIO_Pin_0)
+#define B13_OFF   GPIO_SetBits(GPIOG, GPIO_Pin_0)
+#define B14       GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_1)
+#define B14_ON    GPIO_ResetBits(GPIOG, GPIO_Pin_1)
+#define B14_OFF   GPIO_SetBits(GPIOG, GPIO_Pin_1)
+#define B15       GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_7)
+#define B15_ON    GPIO_ResetBits(GPIOE, GPIO_Pin_7)
+#define B15_OFF   GPIO_SetBits(GPIOE, GPIO_Pin_7)
+#define B16       GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_8)
+#define B16_ON    GPIO_ResetBits(GPIOE, GPIO_Pin_8)
+#define B16_OFF   GPIO_SetBits(GPIOE, GPIO_Pin_8)
+#define B17       GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_9)
+#define B17_ON    GPIO_ResetBits(GPIOE, GPIO_Pin_9)
+#define B17_OFF   GPIO_SetBits(GPIOE, GPIO_Pin_9)
+#define B18       GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_10)
+#define B18_ON    GPIO_ResetBits(GPIOE, GPIO_Pin_10)
+#define B18_OFF   GPIO_SetBits(GPIOE, GPIO_Pin_10)
+#define B19       GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_11)
+#define B19_ON    GPIO_ResetBits(GPIOE, GPIO_Pin_11)
+#define B19_OFF   GPIO_SetBits(GPIOE, GPIO_Pin_11)
+#define B20       GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_12)
+#define B20_ON    GPIO_ResetBits(GPIOE, GPIO_Pin_12)
+#define B20_OFF   GPIO_SetBits(GPIOE, GPIO_Pin_12)
 
-#define Y13       GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_14)
-#define Y13_ON    GPIO_ResetBits(GPIOG, GPIO_Pin_14)
-#define Y13_OFF   GPIO_SetBits(GPIOG, GPIO_Pin_14)
-#define Y14       GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_13)
-#define Y14_ON    GPIO_ResetBits(GPIOG, GPIO_Pin_13)
-#define Y14_OFF   GPIO_SetBits(GPIOG, GPIO_Pin_13)
-#define Y15       GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_12)
-#define Y15_ON    GPIO_ResetBits(GPIOG, GPIO_Pin_12)
-#define Y15_OFF   GPIO_SetBits(GPIOG, GPIO_Pin_12)
-#define Y16       GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_7)
-#define Y16_ON    GPIO_ResetBits(GPIOD, GPIO_Pin_7)
-#define Y16_OFF   GPIO_SetBits(GPIOD, GPIO_Pin_7)
-
-#define PWR_ON    GPIO_SetBits(GPIOE, GPIO_Pin_14);GPIO_ResetBits(GPIOG, GPIO_Pin_15)
-#define PWR_OFF   GPIO_ResetBits(GPIOG, GPIO_Pin_14);GPIO_SetBits(GPIOE, GPIO_Pin_15)
+//#define PWR_ON    GPIO_SetBits(GPIOE, GPIO_Pin_14);GPIO_ResetBits(GPIOG, GPIO_Pin_15)
+//#define PWR_OFF   GPIO_ResetBits(GPIOG, GPIO_Pin_14);GPIO_SetBits(GPIOE, GPIO_Pin_15)
 
 
 typedef union
@@ -156,33 +193,70 @@ typedef union
 {
     struct
     {
-        unsigned Y_1   : 1;
-        unsigned Y_2   : 1;
-        unsigned Y_3   : 1;
-        unsigned Y_4   : 1;
-        unsigned Y_5   : 1;
-        unsigned Y_6   : 1;
-        unsigned Y_7   : 1;
-        unsigned Y_8   : 1;
+        unsigned A_1   : 1;
+        unsigned A_2   : 1;
+        unsigned A_3   : 1;
+        unsigned A_4   : 1;
+        unsigned A_5   : 1;
+        unsigned A_6   : 1;
+        unsigned A_7   : 1;
+        unsigned A_8   : 1;
+        unsigned A_9   : 1;
+        unsigned A_10   : 1;
+			
+        unsigned A_11   : 1;
+        unsigned A_12   : 1;
+        unsigned A_13   : 1;
+        unsigned A_14   : 1;
+        unsigned A_15   : 1;
+        unsigned A_16   : 1;
+				unsigned A_17   : 1;
+        unsigned A_18   : 1;
+        unsigned A_19   : 1;
+        unsigned A_20   : 1;
 
-        unsigned Y_9   : 1;
-        unsigned Y_10   : 1;
-        unsigned Y_11   : 1;
-        unsigned Y_12   : 1;
-        unsigned Y_13   : 1;
-        unsigned Y_14   : 1;
-        unsigned Y_15   : 1;
-        unsigned Y_16   : 1;
     }ONE;
-    unsigned short ALL;
-}Type_Output_Port;
+    unsigned int ALL;
+}Type_Line_A_Port;
 
-extern Type_Output_Port Output_Port;
+extern Type_Line_A_Port Line_A_Port;
+
+typedef union
+{
+    struct
+    {
+				unsigned B_1   : 1;
+        unsigned B_2   : 1;
+        unsigned B_3   : 1;
+        unsigned B_4   : 1;
+        unsigned B_5   : 1;
+        unsigned B_6   : 1;
+        unsigned B_7   : 1;
+        unsigned B_8   : 1;
+        unsigned B_9   : 1;
+        unsigned B_10   : 1;
+			
+        unsigned B_11   : 1;
+        unsigned B_12   : 1;
+        unsigned B_13   : 1;
+        unsigned B_14   : 1;
+        unsigned B_15   : 1;
+        unsigned B_16   : 1;
+				unsigned B_17   : 1;
+        unsigned B_18   : 1;
+				unsigned B_19   : 1;
+        unsigned B_20   : 1;
+				
+    }ONE;
+    unsigned int ALL;
+}Type_Line_B_Port;
+
+extern Type_Line_B_Port Line_B_Port;
 
 void GPIO_Config(void);
-void OutputControl(unsigned int stats);
-unsigned int InputRead(void);
-unsigned int OutputRead(void);
+//void OutputControl(unsigned int stats);
+void Line_A_Control(int stats);
+void Line_B_Control(int stats);
 //unsigned char Input_L_Value(unsigned int num);
 //unsigned char Input_H_Value(unsigned int num);
 

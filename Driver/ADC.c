@@ -13,13 +13,13 @@ void AD1_GPIO_Init(void)						//串口引脚初始化
 	GPIO_InitTypeDef GPIO_InitStructure;		//串口引脚结构
 	
 	//串口引脚分配时钟
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 
 /*配置PC0 1 2 3 4 5 为模拟输入(ADC Channel 10 11 12 13 14 15 */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_4|GPIO_Pin_5; 	 //ADC测试试用
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1; 					 //ADC测试试用
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;	       			//端口模式为模拟输入方式
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;	   			//翻转速度为50M
-  GPIO_Init(GPIOC, &GPIO_InitStructure);			   			//用以上几个参数初始化PC口
+  GPIO_Init(GPIOA, &GPIO_InitStructure);			   			//用以上几个参数初始化PC口
 }
 /*******************************************************************************
 * Function Name  : ADC_Configuration
@@ -39,20 +39,20 @@ void ADC_Configuration(void)
   ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;   				 //开启连续转换模式
   ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;//ADC外部开关，关闭状态
   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;   			 //对齐方式,ADC为12位中，右对齐方式
-  ADC_InitStructure.ADC_NbrOfChannel = 6;	 						 //开启通道数，6个
+  ADC_InitStructure.ADC_NbrOfChannel = 1;	 						 //开启通道数，4个
   ADC_Init(ADC1, &ADC_InitStructure);
  //ADC内置温度传感器使能（要使用片内温度传感器，切忌要开启它）    
 	ADC_TempSensorVrefintCmd(ENABLE);   
 
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_55Cycles5);	//ADC通道组， 第10个通道 采样顺序1，转换时间 
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 2, ADC_SampleTime_55Cycles5);	//ADC通道组， 第11个通道 采样顺序2，转换时间 
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 3, ADC_SampleTime_55Cycles5);	//ADC通道组， 第12个通道 采样顺序3，转换时间 
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_15, 5, ADC_SampleTime_55Cycles5);	//ADC通道组， 第13个通道 采样顺序4，转换时间                           											
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 6, ADC_SampleTime_55Cycles5);	//ADC通道组， 第14个通道 采样顺序5，转换时间                           											
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_55Cycles5);	//ADC通道组， 第10个通道 采样顺序1，转换时间 
+//  ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 2, ADC_SampleTime_55Cycles5);	//ADC通道组， 第11个通道 采样顺序2，转换时间 
+//  ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 3, ADC_SampleTime_55Cycles5);	//ADC通道组， 第12个通道 采样顺序3，转换时间 
+//  ADC_RegularChannelConfig(ADC1, ADC_Channel_13, 4, ADC_SampleTime_55Cycles5);	//ADC通道组， 第13个通道 采样顺序4，转换时间                           											
+//  ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 6, ADC_SampleTime_55Cycles5);	//ADC通道组， 第14个通道 采样顺序5，转换时间                           											
  // ADC_RegularChannelConfig(ADC1, ADC_Channel_13, 6, ADC_SampleTime_55Cycles5);	//ADC通道组， 第15个通道 采样顺序6，转换时间                           											
 
  //常规转换序列2：通道16（内部温度传感器），采样时间>2.2us,(239cycles)    
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_16, 4, ADC_SampleTime_55Cycles5);  
+//	ADC_RegularChannelConfig(ADC1, ADC_Channel_16, 4, ADC_SampleTime_55Cycles5);  
 	
   ADC_DMACmd(ADC1, ENABLE);											 //使能ADC1 DMA 
   ADC_Cmd(ADC1, ENABLE);                                 			 //使能ADC1
@@ -78,7 +78,7 @@ void DMA_Configuration(void)
   DMA_InitStructure.DMA_PeripheralBaseAddr = DR_ADDRESS;		  			//DMA对应的外设ADC基地址
   DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&ADCPrimevalValue;   	//内存存储基地址用户定义
   DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;						//DMA的转换模式为SRC模式，由外设搬移到内存
-  DMA_InitStructure.DMA_BufferSize = 6;		   								//DMA缓存大小，5个
+  DMA_InitStructure.DMA_BufferSize = 1;		   								//DMA缓存大小，5个
   DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;			//接收一次数据后，设备地址禁止后移
   DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;					//关闭接收一次数据后，目标内存地址后移
   DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;  //定义外设数据宽度为16位
@@ -100,8 +100,8 @@ void DMA_Configuration(void)
 ****************************************************************************/
 void AD1_Config(void)
 {
-	ADC_Configuration();				//AD初始化
 	AD1_GPIO_Init();			//AD引脚初始化
+	ADC_Configuration();				//AD初始化
 	DMA_Configuration();
 }
 

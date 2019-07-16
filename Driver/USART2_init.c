@@ -4,6 +4,8 @@
 UsartRxTypeDef1 USARTStructure2;
 unsigned char USART2_TX_BUFF[USART2_TX_BUFF_SIZEMAX];   
 
+extern char ESP_RX_BUFF[128];
+extern char ESP_RX_LEN;
 /****************************************************************************
 * 名	称：void USART2_GPIO_Init(void)
 * 功	能：串口引脚初始化
@@ -29,10 +31,6 @@ void USART2_GPIO_Init(void)			//串口引脚初始化
   	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;		//浮空输入
   	GPIO_Init(GPIOA, &GPIO_InitStructure);						//初始化引脚
 												 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;											//PD3 485 转换
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		//时钟速度为50M
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;		//端口模式为推拉输出方式	
-	GPIO_Init(GPIOD, &GPIO_InitStructure);		
 }
 
 /****************************************************************************
@@ -82,7 +80,7 @@ void USART2_NVIC_Init(void)
 * 功	能：串口DMA初始化
 * 入口参数：无
 * 出口参数：无
-* 说	明：无
+* 说    明：无
 ****************************************************************************/
 void USART2_DMATxd_Init(void)
 {
@@ -226,14 +224,11 @@ void USART2_SendByte(u8 Data)		   //单字符数据输出
 void USART2_SendString(u8* Data,u32 Len)		   //多字符输出
 {
 	u32 i=0;
-	GPIO_SetBits(GPIOD, GPIO_Pin_3 );  
-	Delay_MS(5);
 	for(i=0;i<Len;i++)
 	{
 		USART_SendData(USART2, Data[i]);
         while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
 	}
-	GPIO_ResetBits(GPIOD, GPIO_Pin_3 ); 
 }
 
 /****************************************************************************
@@ -267,28 +262,6 @@ void USART2_DMASendData(u8* Data,u32 Len)		   //多字符输出
 ****************************************************************************/
 void USART2_IRQHandler(void)
 {
-
-//	if(USART_GetITStatus(USART2, USART_IT_RXNE) == SET)				// 串口接收数据触发中断
-//	{
-//		USART_ClearITPendingBit(USART2, USART_IT_RXNE);					//清空接收中断标志									//接收到的字符数据
-
-//		USARTStructure2.RX_TEMP_BUFF[USARTStructure2.RX_TMEP_Len]=USART_ReceiveData(USART2);
-//		USARTStructure2.RX_TMEP_Len++;
-//		
-//    TIM_Cmd(TIM3, ENABLE);									  					 		//使能TIM3	
-//		TIM_SetCounter(TIM3, 0);																//清当前的计数
-//	}
-
-//	else if(USART_GetFlagStatus(USART2, USART_IT_ORE) == SET)	//检测是否有接收溢出
-//	{
-//		USART_ReceiveData(USART2);															//清接收溢出标志，只能用读数据的方式来清溢出标志
-//	}
-
-//	else if(USART_GetITStatus(USART2, USART_IT_TXE) == SET)		//串口发送数据触发中断
-//	{
-//		
-//	}
-
 	unsigned char i;
 	unsigned char USART2_GetChar;
 	
@@ -297,28 +270,35 @@ void USART2_IRQHandler(void)
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);					//清空接收中断标志			//接收到的字符数据
 
 		USART2_GetChar  = USART_ReceiveData(USART2);
-		
-//    TIM_Cmd(TIM3, ENABLE);									  					 		//使能TIM3	
-//		TIM_SetCounter(TIM3, 0);																//清当前的计数
-	
+			
 		if(USART2_GetChar==0xA)                             		//接收到LF结束符
 		{
-				USARTStructure2.RX_Flag = 1;
+//				USARTStructure2.RX_Flag = 1;
 
 		}
 		else if(USART2_GetChar==0xD)                        		//接收到CR结束符
 		{
-			USARTStructure2.RX_BUFF[USARTStructure2.RX_Len] = '\0';
-			USARTStructure2.RX_Flag = 1;
-			TIM_Cmd(TIM3, DISABLE);									  						//关闭 TIM4	
+//			USARTStructure2.RX_BUFF[USARTStructure2.RX_Len] = '\0';
+			for(i = 0; i < USARTStructure2.RX_Len; i++)
+			{
+				ESP_RX_BUFF[i] = USARTStructure2.RX_BUFF[i];
+			}
+			ESP_RX_BUFF[i] = '\0';
+			ESP_RX_LEN = USARTStructure2.RX_Len;
+			for(i = 0; i < USARTStructure2.RX_Len; i++)
+			{
+				USARTStructure2.RX_BUFF[i] = 0;
+			}
+			USARTStructure2.RX_Len = 0;
+			USARTStructure2.RX_Flag = 1;		
 		}
 		else
 		{
 				USARTStructure2.RX_BUFF[USARTStructure2.RX_Len]=USART2_GetChar;
 				USARTStructure2.RX_Len++;
-				if(USARTStructure2.RX_Len>=60)
+				if(USARTStructure2.RX_Len>=100)
 				{
-						for(i=0;i<60;i++)
+						for(i=0;i<100;i++)
 						{
 							 USARTStructure2.RX_BUFF[i]=0x00;  						//清空字符串
 						}

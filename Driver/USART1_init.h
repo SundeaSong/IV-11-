@@ -7,7 +7,7 @@ extern "C" {
 
 #include "Config.h"
 
-#define USART1BaudRate		38400		   			  													//定义串口1的波特率
+#define USART1BaudRate		115200		   			  													//定义串口1的波特率
 
 
 void USART1_Config(void);		  								//串口配置

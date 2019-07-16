@@ -85,7 +85,7 @@ void LOCK_OFF(void)
 void PUSH_IN(void)
 {
 	Y1_ON;
-	Delay_S(2);
+	Delay_S(3);
 	if(X1 == ON)
 	{
 		printf("PUSH_IN_OK\r\n");
@@ -99,7 +99,7 @@ void PUSH_IN(void)
 void PUSH_OUT(void)
 {
 	Y1_OFF;
-	Delay_S(2);
+	Delay_S(3);
 	if(X2 == ON)
 	{
 		printf("PUSH_OUT_OK\r\n");
@@ -175,7 +175,7 @@ void Reset_Test(void)
 	Y1_OFF;
 	Delay_MS(500);
 //	if(X2 == ON)
-	while(X2);
+	while(!X2);
 	Delay_MS(500);
 	Y2_OFF;
 	printf("RESET_OK\r\n");

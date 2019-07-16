@@ -16,18 +16,20 @@ void USART1_GPIO_Init(void)						//串口引脚初始化
 	GPIO_InitTypeDef GPIO_InitStructure;		//串口引脚结构
 	
 	//串口引脚分配时钟
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO,ENABLE);	//开启引脚复用
+	GPIO_PinRemapConfig(GPIO_Remap_USART1,ENABLE);								//开启引脚重映射
 
-	//配置串口 Tx (PA.09) 为复用推挽输出
-  	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;					//串口发送引脚
+	//配置串口 Tx (PB.06) 为复用推挽输出
+  	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;					//串口发送引脚
   	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;				//复用推挽输出
   	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			//频率50MHz
-  	GPIO_Init(GPIOA, &GPIO_InitStructure);						//初始化引脚
+  	GPIO_Init(GPIOB, &GPIO_InitStructure);						//初始化引脚
     
-	// 配置串口 Rx (PA.10) 为浮空输入
-  	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;					//串口接收引脚
+	// 配置串口 Rx (PB.7) 为浮空输入
+  	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;					//串口接收引脚
   	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;		//浮空输入
-  	GPIO_Init(GPIOA, &GPIO_InitStructure);						//初始化引脚
+  	GPIO_Init(GPIOB, &GPIO_InitStructure);						//初始化引脚
 }
 
 /****************************************************************************

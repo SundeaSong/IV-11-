@@ -19,14 +19,14 @@ extern "C" {
 	
 */
 
-#define SCLH         GPIOB->BSRR = GPIO_Pin_6
-#define SCLL         GPIOB->BRR  = GPIO_Pin_6 
+#define SCLH         GPIOA->BSRR = GPIO_Pin_11
+#define SCLL         GPIOA->BRR  = GPIO_Pin_11
    
-#define SDAH         GPIOB->BSRR = GPIO_Pin_7
-#define SDAL         GPIOB->BRR  = GPIO_Pin_7
+#define SDAH         GPIOA->BSRR = GPIO_Pin_12
+#define SDAL         GPIOA->BRR  = GPIO_Pin_12
 
-#define SCLread      GPIOB->IDR  & GPIO_Pin_6
-#define SDAread      GPIOB->IDR  & GPIO_Pin_7
+#define SCLread      GPIOA->IDR  & GPIO_Pin_11
+#define SDAread      GPIOA->IDR  & GPIO_Pin_12
 
 	
 #define  W_ENANLE   	GPIO_WriteBit(GPIOB, GPIO_Pin_5, (BitAction)0x00)
@@ -44,6 +44,17 @@ uint8_t I2C_EE_BufferRead(uint8_t *pdin_data,uint16_t adr,uint8_t nbyte);
 		
 unsigned int ReadEpData(unsigned int ads);
 void SaveEpData(unsigned int ads,unsigned post);
+
+uint8_t TWI_Start(void);
+void TWI_Stop(void);
+void TWI_Ack(void);
+void TWI_NoAck(void);
+uint8_t TWI_WaitAck(void);  
+void TWI_SendByte(uint8_t SendByte);
+uint8_t TWI_ReceiveByte(void)  ;
+uint8_t TWI_WriteByte(uint8_t SendByte, uint16_t WriteAddress);
+uint8_t TWI_ReadByte( uint16_t ReadAddress);
+
 
 #ifdef __cplusplus		   	
 }

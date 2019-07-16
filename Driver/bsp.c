@@ -102,7 +102,8 @@ unsigned int PowerON_Count;
 //	USART3_Config();		//串口3初始化               RS232
 //    USART4_Config();		//串口4初始化               RS485
 //	USART5_Config();		//串口5初始化               RS232		
-	
+//////////	TIM2_Init();
+//////////	TIM3_Init();
 	Set_PrintfPort(1);	//设置printf打印输出用端口
 
 		
@@ -113,15 +114,23 @@ unsigned int PowerON_Count;
     //EXTILine_Config();
     
 	BKP_Config();			//后备寄存器
-	I2C_EE_Init();
-	
+//////////	I2C_EE_Init();
+//////////	DS3231_Init();
+//////////	hv5812_init();
+//////////	DS18B20_Init();
+//	Radio_Init();
+//	Auto_Search(1);
+
+//		Line_A_Control(0x00000);
+//		Line_B_Control(0x00000);
+
 	/************************************/ 
 	//W5500 初始化
 	//W5500_Config();
 	
 	/************************************/
 	//AD 初始化
-	//AD1_Config();
+		AD1_Config();
 
 //	SPI_FLASH_SPI_Init();
 //usb hid key		
